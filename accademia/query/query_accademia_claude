@@ -1,0 +1,96 @@
+# Esercitazione SQL - Query Aggiuntive
+## Database Accademia - Raggruppamenti e Aggregati
+
+---
+
+## Query da Risolvere
+
+Definire in SQL le seguenti interrogazioni, in cui si chiedono tutti risultati distinti:
+
+**1.** Qual è il budget totale, medio, minimo e massimo dei progetti finiti prima del 2010?
+
+**2.** Quanti sono i docenti (professori associati e ordinari) che hanno dedicato più di 5 ore complessive ad attività non progettuali?
+
+**3.** Quali sono i nomi delle persone che hanno lavorato su più di un WP (Work Package) del progetto 'Simap', e quanti WP distinti hanno gestito ciascuno?
+
+**4.** Qual è il numero totale di giorni di assenza per ogni tipo di causa (Malattia, Maternità, Chiusura Universitaria)?
+
+**5.** Quali sono gli strutturati che hanno uno stipendio superiore alla media della loro fascia?
+
+---
+
+## Risultati Attesi delle Query
+
+Per incentivare gli studenti ad eseguire le loro interrogazioni su un DBMS, di seguito vengono riportati i risultati delle query sul database Accademia.
+
+È quindi possibile eseguire le proprie query e verificare che l'output sia consistente con quello riportato.
+
+### 1) Qual è il budget totale, medio, minimo e massimo dei progetti finiti prima del 2010?
+
+```
+  budget_medio   | budget_minimo | budget_massimo | budget_totale 
+-----------------+---------------+----------------+---------------
+ 626500.00000000 |        255000 |         998000 |       1253000
+(1 row)
+```
+
+### 2) Quanti sono i docenti (professori associati e ordinari) che hanno dedicato più di 5 ore complessive ad attività non progettuali?
+
+```
+ numero_docenti 
+----------------
+              2
+(1 row)
+```
+
+### 3) Quali sono i nomi delle persone che hanno lavorato su più di un WP del progetto 'Simap', e quanti WP distinti hanno gestito ciascuno?
+
+```
+ id_persona | nome   | cognome  | numero_wp 
+------------+--------+----------+-----------
+          4 | Aurora | Bianchi  |         2
+(1 row)
+```
+
+### 4) Qual è il numero totale di giorni di assenza per ogni tipo di causa?
+
+```
+          tipo          | numero_assenze 
+------------------------+----------------
+ Chiusura Universitaria |              2
+ Maternita              |              3
+ Malattia               |              6
+(3 rows)
+```
+
+### 5) Quali sono gli strutturati che hanno uno stipendio superiore alla media della loro fascia?
+
+```
+ id_persona |   nome   |  cognome   |       posizione        | stipendio 
+------------+----------+------------+------------------------+-----------
+          8 | Asia     | Giordano   | Professore Ordinario   |  45200.10
+          9 | Carlo    | Zante      | Professore Ordinario   |  40230.00
+         10 | Ginevra  | Riva       | Professore Ordinario   |  39955.00
+          4 | Aurora   | Bianchi    | Professore Associato   |  43500.50
+         17 | Emilio   | Greco      | Professore Associato   |  42020.00
+         16 | Paolo    | Valentini  | Professore Associato   |  39200.00
+          7 | Andrea   | Verona     | Professore Associato   |  39002.05
+         19 | Elisa    | Longo      | Professore Associato   |  39001.00
+          0 | Anna     | Bianchi    | Ricercatore            |  45500.30
+         12 | Dario    | Basile     | Ricercatore            |  42566.00
+         20 | Carla    | Martinelli | Ricercatore            |  42030.20
+          2 | Barbara  | Burso      | Ricercatore            |  40442.50
+         18 | Giulia   | Costa      | Ricercatore            |  40220.00
+(13 rows)
+```
+
+---
+
+## Suggerimenti
+
+- Utilizzare funzioni aggregate: `COUNT()`, `SUM()`, `AVG()`, `MIN()`, `MAX()`
+- Utilizzare `GROUP BY` per raggruppare i risultati
+- Utilizzare `HAVING` per filtrare i gruppi
+- Utilizzare `DISTINCT` quando necessario per contare valori unici
+- Ricordare che i join sono impliciti (nella clausola `WHERE`)
+- Per confronti con medie, considerare l'uso di sub
