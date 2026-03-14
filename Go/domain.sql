@@ -10,16 +10,16 @@ create type colore as enum (
 	'Bianco', 'Nero'
 );
 
-create type intgez as integer 
+create domain intgez as integer 
 	check (value >= 0);
 
-create domain via as varchar
+create domain via as varchar(100)
 	check (value is not null);
 
-create domain civico as varchar
+create domain civico as varchar(100)
 	check (value is not null);
 
-create type indirizzo (
+create type indirizzo as (
 	via via,
 	civico civico
 );
