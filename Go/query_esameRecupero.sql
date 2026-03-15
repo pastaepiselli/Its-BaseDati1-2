@@ -40,7 +40,53 @@ and ap.persona = p.id
 and ap.wp = wp.id
 order by anp.oredurata asc
 
--- continuare con il popa
+-- 6) calcolare il numero di attivita progettuali in ognuno dei progetti. Per ogni progetto
+-- restituire l'id, il nome, e il numero di attivita che ne fanno parte.
+
+select p.id, p.nome, count (ap.id)
+from attivitaprogetto ap, progetto p
+where ap.progetto = p.id
+group by p.id
+
+-- 7) elencare i wp che hanno almeno 2 attivita. Per wp, restituire il nome, l'inizio e la fine.
+
+select wp.id, wp.nome, wp.inizio, wp.fine
+from wp, attivitaprogetto ap
+where wp.progetto = ap.progetto
+and ap.wp = wp.id
+group by wp.id, wp.nome, wp.inizio, wp.fine
+having count(ap.id) >= 3
+
+-- 8) restiturie i nomi e i cognomi delle persone che hanno avuto assenze in giorni in cui avevano
+-- anche attivita non progettuali. Elencare tali persone in ordine alfabefico per cognome.
+
+select p.nome, p.cognome
+from assenza a, attivitanonprogettuale anp, persona p
+where a.persona = anp.persona
+and a.giorno = anp.giorno
+and p.id = a.persona
+order by p.cognome asc
+
+-- 9) elencare le persone che hanno partecipato ad attivita progettuali per un numero totale di ore
+-- superiore a 25.
+
+select p.nome, p.cognome, sum(ap.oredurata) as totale_ore
+from attivitaprogetto ap, persona p
+where p.id = ap.persona
+group by p.id, p.nome, p.cognome
+having sum(ap.oredurata) > 25
+
+-- 10) restituire l'id e i nome dei wp che non hanno alcuna attivita iniziata prima del '2025-12-01'
+select *select wp.id, wp.nome
+from wp
+where not exists (
+	select wp.id
+	from attivitaprogetto ap
+	where ap.wp = wp.id
+	and ap.progetto = wp.progetto
+	and ap.giorno < '2025-12-01'
+)
+
 
 
 
